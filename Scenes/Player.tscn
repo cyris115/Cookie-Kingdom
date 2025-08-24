@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://beatnjh15vfqp"]
+
+[ext_resource type="Script" uid="uid://82arejsi3x54" path="res://Scripts/Player.gd" id="1_rpqav"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rpqav"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_kyqiw"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gntrk"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("barrel") groups=["player"]]
+script = ExtResource("1_rpqav")
+barrel = NodePath("GunBarrel")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rpqav")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.582346, 0.521594, 0.34622, 1)
+scale = Vector2(15, 15)
+texture = SubResource("CanvasTexture_kyqiw")
+
+[node name="ShotTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="GunBarrel" type="Node2D" parent="."]
+position = Vector2(8, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="GunBarrel"]
+modulate = Color(0.0309377, 0.0874123, 0.152457, 1)
+position = Vector2(1, 0)
+scale = Vector2(2.29, 2.29)
+texture = SubResource("CanvasTexture_gntrk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -31.0
+offset_right = 26.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "hp:100"
+horizontal_alignment = 1
+
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]

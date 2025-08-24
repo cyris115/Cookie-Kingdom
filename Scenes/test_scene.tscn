@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bov1b1nfydn21"]
+
+[ext_resource type="PackedScene" uid="uid://beatnjh15vfqp" path="res://Scenes/Player.tscn" id="1_3dogw"]
+[ext_resource type="PackedScene" uid="uid://brw2geqoqesfw" path="res://Scenes/Badguy.tscn" id="2_r5l72"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_3dogw")]
+position = Vector2(478, 246)
+
+[node name="CharacterBody2D2" parent="." instance=ExtResource("2_r5l72")]
+position = Vector2(218, 258)
+
+[node name="CharacterBody2D3" parent="." instance=ExtResource("2_r5l72")]
+position = Vector2(445, 312)
+
+[node name="CharacterBody2D4" parent="." instance=ExtResource("2_r5l72")]
+position = Vector2(425, 181)
+
+[node name="CharacterBody2D5" parent="." instance=ExtResource("2_r5l72")]
+position = Vector2(570, 241)

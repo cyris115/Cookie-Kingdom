@@ -32,3 +32,9 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "hp:100"
 horizontal_alignment = 1
+
+[node name="InvTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="InvTimer" to="." method="_on_inv_timer_timeout"]

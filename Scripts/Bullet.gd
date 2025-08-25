@@ -17,6 +17,6 @@ func _on_area_entered(_area: Area2D) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
-		queue_free() #add damage
+		queue_free()
 	if body.is_in_group("badguy"):
-		body.queue_free()
+		body.take_damage(5)

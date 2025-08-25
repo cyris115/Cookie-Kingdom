@@ -27,6 +27,10 @@ autostart = true
 [node name="InvincibilityTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="StamTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [node name="GunBarrel" type="Node2D" parent="."]
 position = Vector2(8, 0)
 
@@ -38,20 +42,36 @@ texture = SubResource("CanvasTexture_gntrk")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Label" type="Label" parent="."]
+[node name="HPLabel" type="Label" parent="."]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -26.0
-offset_top = -31.0
+offset_top = -50.0
 offset_right = 26.0
-offset_bottom = -8.0
+offset_bottom = -27.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "hp:100"
 horizontal_alignment = 1
 
+[node name="StamLabel" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -32.0
+offset_right = 26.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "stamina: 100"
+horizontal_alignment = 1
+
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
+[connection signal="timeout" from="StamTimer" to="." method="_on_stam_timer_timeout"]

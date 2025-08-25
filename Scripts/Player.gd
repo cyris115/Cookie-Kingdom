@@ -1,12 +1,21 @@
 class_name Player
 extends CharacterBody2D
 
-static var hp: int
 static var max_hp = 100
+static var max_stam = 100
+static var hp = 100:
+	set(value):
+		hp = clamp(value, 0, max_hp)
+static var stam = 100:
+	set(value):
+		stam = clamp(value, 0, max_stam)
+
 
 @export var speed = 70.0
 @export var run_speed = 110.0
 @export var walk_speed = 70.0
+@export var stam_drain_rate = 33.333 #Stamina drain in stam/second
+@export var stam_regen_rate = 20 #Stamina gain in stam/second
 
 var direction := Vector2.RIGHT
 static var last_direction := Vector2.RIGHT
@@ -15,15 +24,22 @@ var bullet = preload("res://Scenes/Bullet.tscn")
 @export var barrel: Node2D
 var can_shoot := false
 var can_damage := true
+var can_sprint := true
+var is_sprinting := false
 
 @onready var invincibility_timer: Timer = $InvincibilityTimer
 @onready var shoot_timer: Timer = $ShotTimer
+@onready var stam_timer: Timer = $StamTimer
 @onready var gun: Sprite2D = $GunBarrel/Sprite2D
 @onready var body: Sprite2D = $Sprite2D
+@onready var hp_label: Label = $HPLabel
+@onready var stam_label: Label = $StamLabel
 
 func _ready() -> void:
 	hp = max_hp
-	$Label.text = "hp: " + str(hp)
+	hp_label.text = "hp: " + str(hp)
+	stam = max_stam
+	stam_label.text = "stamina: " + str(stam)
 
 
 
@@ -45,10 +61,21 @@ func _physics_process(_delta: float) -> void:
 	look_at(get_global_mouse_position())
 
 
-	if Input.is_action_pressed("run"):
+	if Input.is_action_pressed("run") and can_sprint:
 		speed = run_speed
+		is_sprinting = true
 	else:
 		speed = walk_speed
+		is_sprinting = false
+		
+	if is_sprinting:
+		stam -= stam_drain_rate * _delta
+		if stam <= 0:
+			can_sprint = false
+			stam_timer.start()
+	else:
+		stam += stam_regen_rate * _delta
+	stam_label.text = "stamina: " + str(roundi(stam))
 	
 	velocity = direction.normalized() * speed #might need to remove delta idk
 		
@@ -80,7 +107,7 @@ func take_damage(dmg: int):
 	if hp < 0:
 		#Likely need to add other code here
 		hp = 0
-	$Label.text = "hp: " + str(hp)
+	hp_label.text = "hp: " + str(hp)
 
 
 func _on_shot_timer_timeout() -> void:
@@ -88,3 +115,6 @@ func _on_shot_timer_timeout() -> void:
 
 func _on_invincibility_timer_timeout() -> void:
 	can_damage = true
+
+func _on_stam_timer_timeout() -> void:
+	can_sprint = true

@@ -14,7 +14,9 @@ static var last_direction := Vector2.RIGHT
 var bullet = preload("res://Scenes/Bullet.tscn")
 @export var barrel: Node2D
 var can_shoot := false
+var can_damage := true
 
+@onready var invincibility_timer: Timer = $InvincibilityTimer
 @onready var shoot_timer: Timer = $ShotTimer
 @onready var gun: Sprite2D = $GunBarrel/Sprite2D
 @onready var body: Sprite2D = $Sprite2D
@@ -52,7 +54,16 @@ func _physics_process(_delta: float) -> void:
 		
 		
 	move_and_slide()
-
+	
+	#Collision code
+	if can_damage:
+		for i in get_slide_collision_count():
+			var body = get_slide_collision(i).get_collider()
+			if body.is_in_group("badguy"):
+				take_damage(5)
+				can_damage = false
+				invincibility_timer.start()
+				break
 
 
 func Shoot():
@@ -64,8 +75,16 @@ func Shoot():
 		can_shoot = false
 		shoot_timer.start()
 
-
+func take_damage(dmg: int):
+	hp -= dmg
+	if hp < 0:
+		#Likely need to add other code here
+		hp = 0
+	$Label.text = "hp: " + str(hp)
 
 
 func _on_shot_timer_timeout() -> void:
 	can_shoot = true
+
+func _on_invincibility_timer_timeout() -> void:
+	can_damage = true

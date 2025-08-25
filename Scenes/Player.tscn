@@ -24,6 +24,9 @@ texture = SubResource("CanvasTexture_kyqiw")
 wait_time = 0.5
 autostart = true
 
+[node name="InvincibilityTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="GunBarrel" type="Node2D" parent="."]
 position = Vector2(8, 0)
 
@@ -51,3 +54,4 @@ text = "hp:100"
 horizontal_alignment = 1
 
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

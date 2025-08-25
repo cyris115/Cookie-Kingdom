@@ -30,10 +30,11 @@ var is_sprinting := false
 @onready var invincibility_timer: Timer = $InvincibilityTimer
 @onready var shoot_timer: Timer = $ShotTimer
 @onready var stam_timer: Timer = $StamTimer
-@onready var gun: Sprite2D = $GunBarrel/Sprite2D
-@onready var body: Sprite2D = $Sprite2D
+@onready var gun: Sprite2D = $RotationNode/GunBarrel/Sprite2D
+@onready var body: Sprite2D = $RotationNode/Sprite2D
 @onready var hp_label: Label = $HPLabel
 @onready var stam_label: Label = $StamLabel
+@onready var rotation_node: Node2D = $RotationNode
 
 func _ready() -> void:
 	hp = max_hp
@@ -58,7 +59,7 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("left"):
 		direction.x -= 1
 		
-	look_at(get_global_mouse_position())
+	rotation_node.look_at(get_global_mouse_position())
 
 
 	if Input.is_action_pressed("run") and can_sprint:

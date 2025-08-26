@@ -1,6 +1,7 @@
 extends Area2D
 
 @export var speed = 190
+@export var damage = 25
 var velocity: Vector2
 var direction := Vector2.ZERO
 
@@ -19,4 +20,4 @@ func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		queue_free()
 	if body.is_in_group("badguy"):
-		body.take_damage(5)
+		body.take_damage(damage)

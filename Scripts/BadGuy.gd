@@ -10,6 +10,8 @@ var player: Node2D
 var can_damage := true
 @onready var inv_timer: Timer = $InvTimer
 
+signal on_death()
+
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	
@@ -32,7 +34,8 @@ func _physics_process(_delta: float) -> void:
 func take_damage(dmg: int):
 	if can_damage:
 		hp -= dmg
-		if hp < 0:
+		if hp <= 0:
+			on_death.emit()
 			queue_free()
 		else:
 			$Label.text = "hp: " + str(hp)

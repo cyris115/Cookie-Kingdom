@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://bov1b1nfydn21"]
+
+[ext_resource type="PackedScene" uid="uid://beatnjh15vfqp" path="res://Scenes/AssetScenes/Player.tscn" id="1_oc56l"]
+[ext_resource type="PackedScene" uid="uid://brw2geqoqesfw" path="res://Scenes/AssetScenes/Badguy.tscn" id="2_xtxyy"]
+[ext_resource type="PackedScene" uid="uid://bu87deoqhxgmf" path="res://Scenes/AssetScenes/biscuit.tscn" id="3_5vy8k"]
+[ext_resource type="PackedScene" uid="uid://ekqwt5fvn4wb" path="res://Scenes/UI/pause_menu.tscn" id="4_il81k"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_oc56l")]
+position = Vector2(478, 246)
+
+[node name="CharacterBody2D2" parent="." instance=ExtResource("2_xtxyy")]
+position = Vector2(218, 258)
+
+[node name="CharacterBody2D3" parent="." instance=ExtResource("2_xtxyy")]
+position = Vector2(445, 312)
+
+[node name="CharacterBody2D4" parent="." instance=ExtResource("2_xtxyy")]
+position = Vector2(425, 181)
+
+[node name="CharacterBody2D5" parent="." instance=ExtResource("2_xtxyy")]
+position = Vector2(570, 241)
+
+[node name="Biscuit" parent="." instance=ExtResource("3_5vy8k")]
+position = Vector2(297, 200)
+
+[node name="Biscuit2" parent="." instance=ExtResource("3_5vy8k")]
+position = Vector2(344, 164)
+
+[node name="Biscuit3" parent="." instance=ExtResource("3_5vy8k")]
+position = Vector2(350, 202)
+
+[node name="Biscuit4" parent="." instance=ExtResource("3_5vy8k")]
+position = Vector2(283, 335)
+
+[node name="Biscuit5" parent="." instance=ExtResource("3_5vy8k")]
+position = Vector2(308, 265)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_il81k")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+pivot_offset = Vector2(49, 27)
+size_flags_horizontal = 4
+size_flags_vertical = 4

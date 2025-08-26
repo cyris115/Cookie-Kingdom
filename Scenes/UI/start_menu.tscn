@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkqjwejklf126"]
+
+[ext_resource type="Script" uid="uid://ccedv6ofuj01y" path="res://Scripts/start_menu.gd" id="1_xry01"]
+
+[node name="StartMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xry01")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.0
+offset_top = -46.5
+offset_right = 71.0
+offset_bottom = 46.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "COOKIE KINGDOM"
+
+[node name="Play" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Game"
+
+[node name="Quit" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="QuitConfrim" type="ConfirmationDialog" parent="CanvasLayer/PanelContainer/VBoxContainer/Quit"]
+size = Vector2i(252, 100)
+dialog_text = "Are you sure you want to quit?"
+
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="confirmed" from="CanvasLayer/PanelContainer/VBoxContainer/Quit/QuitConfrim" to="." method="_on_quit_confrim_confirmed"]

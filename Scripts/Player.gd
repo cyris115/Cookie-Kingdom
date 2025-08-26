@@ -20,7 +20,7 @@ static var stam = 100:
 var direction := Vector2.RIGHT
 static var last_direction := Vector2.RIGHT
 
-var bullet = preload("res://Scenes/Bullet.tscn")
+var bullet = preload("res://Scenes/AssetScenes/Bullet.tscn")
 @export var barrel: Node2D
 var can_shoot := false
 var can_damage := true

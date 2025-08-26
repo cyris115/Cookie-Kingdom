@@ -69,7 +69,7 @@ func _physics_process(_delta: float) -> void:
 		speed = walk_speed
 		is_sprinting = false
 		
-	if is_sprinting:
+	if is_sprinting and velocity.length() > 0:
 		stam -= stam_drain_rate * _delta
 		if stam <= 0:
 			can_sprint = false
@@ -109,7 +109,10 @@ func take_damage(dmg: int):
 		#Likely need to add other code here
 		hp = 0
 	hp_label.text = "hp: " + str(hp)
-
+	
+func reduce_stam(new_stam: int):
+	stam = new_stam
+	stam_label.text = "stamina: " + str(stam)
 
 func _on_shot_timer_timeout() -> void:
 	can_shoot = true

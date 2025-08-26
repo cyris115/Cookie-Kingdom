@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bu87deoqhxgmf"]
+
+[ext_resource type="Script" uid="uid://cjsv0yftn6cpk" path="res://Scripts/biscuit.gd" id="1_ebkt1"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ub1ah"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ub1ah"]
+radius = 3.16228
+
+[node name="Biscuit" type="Area2D"]
+script = ExtResource("1_ebkt1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.42109e-14, 1.19209e-07)
+scale = Vector2(5.5, 5.5)
+texture = SubResource("CanvasTexture_ub1ah")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ub1ah")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -15,16 +15,13 @@ signal on_death()
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	
-	
 func _physics_process(_delta: float) -> void:
 	if not player:
 		return
 		
-		
 	var distance = global_position.distance_to(player.global_position)
 	if distance <= detect_radius:
 		var direction = (player.global_position - global_position).normalized()
-		
 		
 		velocity = direction * speed
 		move_and_slide()
@@ -41,7 +38,6 @@ func take_damage(dmg: int):
 			$Label.text = "hp: " + str(hp)
 			can_damage = false
 			inv_timer.start()
-
 
 func _on_inv_timer_timeout() -> void:
 	can_damage = true

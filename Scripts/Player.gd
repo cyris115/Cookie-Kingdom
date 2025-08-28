@@ -16,6 +16,7 @@ static var stam = 100:
 @export var walk_speed = 70.0
 @export var stam_drain_rate = 33.333 #Stamina drain in stam/second
 @export var stam_regen_rate = 20 #Stamina gain in stam/second
+@export var dmg: int
 
 var direction := Vector2.RIGHT
 static var last_direction := Vector2.RIGHT
@@ -47,11 +48,8 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	Shoot()	
 	
 	direction = Vector2.ZERO
-	
-	
 	if Input.is_action_pressed("down"):
 		direction.y += 1
 	if Input.is_action_pressed("up"):
@@ -60,30 +58,24 @@ func _physics_process(_delta: float) -> void:
 		direction.x += 1
 	if Input.is_action_pressed("left"):
 		direction.x -= 1
-		
 	
-	
-	
+	#setting very bad ass animations and flipping charcter sprite
 	if direction and is_dead == false:
 		body.play("walk")
 	elif !direction and is_dead == false:
 		body.play("idle")
-	
 	if hp == 0 and not is_dead:
 		is_dead = true
 		body.play("die")
-		
-		
 	if direction > Vector2.ZERO and not is_dead:
 		body.flip_h = false
 	elif direction < Vector2.ZERO and not is_dead:
 		body.flip_h = true
-	
-	
-	
 
+	#pew
+	Shoot()	
 	
-	
+	#running
 	if Input.is_action_pressed("run") and can_sprint:
 		speed = run_speed
 		is_sprinting = true
@@ -91,7 +83,7 @@ func _physics_process(_delta: float) -> void:
 		speed = walk_speed
 		is_sprinting = false
 		
-		
+	#stamina
 	if is_sprinting and velocity.length() > 0:
 		stam -= stam_drain_rate * _delta
 		if stam <= 0:
@@ -103,25 +95,25 @@ func _physics_process(_delta: float) -> void:
 	
 	velocity = direction.normalized() * speed 
 		
-		
 	if not is_dead:
 		move_and_slide()
 	
-	#Collision code
+	#collision attack and damage
 	if can_damage:
 		for i in get_slide_collision_count():
 			var _body = get_slide_collision(i).get_collider()
 			if _body.is_in_group("badguy"):
-				take_damage(30)
+				take_damage(dmg)
 				can_damage = false
 				invincibility_timer.start()
 				break
 
-
 func Shoot():
+	#no shoot if ded
 	if is_dead:
 		return
 	
+	#spawning bullet. figure out spawn pooling later
 	if Input.is_action_pressed("shoot") and can_shoot:
 		var new_bullet = bullet.instantiate()
 		new_bullet.global_position = barrel.global_position
@@ -135,7 +127,6 @@ func take_damage(dmg: int):
 	if hp < 0:
 		#Likely need to add other code here
 		hp = 0
-		
 	hp_label.text = "hp: " + str(hp)
 	
 func reduce_stam(new_stam: int):

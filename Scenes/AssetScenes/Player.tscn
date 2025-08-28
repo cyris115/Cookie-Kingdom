@@ -272,6 +272,7 @@ animations = [{
 process_mode = 3
 scale = Vector2(2, 2)
 script = ExtResource("1_rpqav")
+dmg = 40
 barrel = NodePath("RotationNode/GunBarrel")
 
 [node name="RotationNode" type="Node2D" parent="."]
@@ -306,7 +307,6 @@ one_shot = true
 zoom = Vector2(2.445, 2.445)
 
 [node name="HPLabel" type="Label" parent="."]
-visible = false
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0

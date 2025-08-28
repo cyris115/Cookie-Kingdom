@@ -26,12 +26,14 @@ var can_shoot := false
 var can_damage := true
 var can_sprint := true
 var is_sprinting := false
+var is_dead := false
 
 @onready var invincibility_timer: Timer = $InvincibilityTimer
 @onready var shoot_timer: Timer = $ShotTimer
 @onready var stam_timer: Timer = $StamTimer
 @onready var gun: Sprite2D = $RotationNode/GunBarrel/Sprite2D
-@onready var body: Sprite2D = $RotationNode/Sprite2D
+@onready var body: AnimatedSprite2D = $RotationNode/AnimatedSprite2D
+
 @onready var hp_label: Label = $HPLabel
 @onready var stam_label: Label = $StamLabel
 @onready var rotation_node: Node2D = $RotationNode
@@ -59,15 +61,36 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("left"):
 		direction.x -= 1
 		
-	rotation_node.look_at(get_global_mouse_position())
+	
+	
+	
+	if direction and is_dead == false:
+		body.play("walk")
+	elif !direction and is_dead == false:
+		body.play("idle")
+	
+	if hp == 0 and not is_dead:
+		is_dead = true
+		body.play("die")
+		
+		
+	if direction > Vector2.ZERO and not is_dead:
+		body.flip_h = false
+	elif direction < Vector2.ZERO and not is_dead:
+		body.flip_h = true
+	
+	
+	
 
-
+	
+	
 	if Input.is_action_pressed("run") and can_sprint:
 		speed = run_speed
 		is_sprinting = true
 	else:
 		speed = walk_speed
 		is_sprinting = false
+		
 		
 	if is_sprinting and velocity.length() > 0:
 		stam -= stam_drain_rate * _delta
@@ -81,20 +104,24 @@ func _physics_process(_delta: float) -> void:
 	velocity = direction.normalized() * speed 
 		
 		
-	move_and_slide()
+	if not is_dead:
+		move_and_slide()
 	
 	#Collision code
 	if can_damage:
 		for i in get_slide_collision_count():
-			var body = get_slide_collision(i).get_collider()
-			if body.is_in_group("badguy"):
-				take_damage(5)
+			var _body = get_slide_collision(i).get_collider()
+			if _body.is_in_group("badguy"):
+				take_damage(30)
 				can_damage = false
 				invincibility_timer.start()
 				break
 
 
 func Shoot():
+	if is_dead:
+		return
+	
 	if Input.is_action_pressed("shoot") and can_shoot:
 		var new_bullet = bullet.instantiate()
 		new_bullet.global_position = barrel.global_position
@@ -108,6 +135,7 @@ func take_damage(dmg: int):
 	if hp < 0:
 		#Likely need to add other code here
 		hp = 0
+		
 	hp_label.text = "hp: " + str(hp)
 	
 func reduce_stam(new_stam: int):
@@ -122,3 +150,5 @@ func _on_invincibility_timer_timeout() -> void:
 
 func _on_stam_timer_timeout() -> void:
 	can_sprint = true
+	
+	

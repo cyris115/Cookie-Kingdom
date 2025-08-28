@@ -78,7 +78,7 @@ func _physics_process(_delta: float) -> void:
 		stam += stam_regen_rate * _delta
 	stam_label.text = "stamina: " + str(roundi(stam))
 	
-	velocity = direction.normalized() * speed #might need to remove delta idk
+	velocity = direction.normalized() * speed 
 		
 		
 	move_and_slide()

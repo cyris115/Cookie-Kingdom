@@ -8,6 +8,7 @@
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["badguy"]]
 script = ExtResource("1_xequl")
+detect_radius = 1600.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(1.49, 1.49)

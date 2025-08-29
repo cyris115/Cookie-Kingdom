@@ -2,6 +2,7 @@ extends Node2D
 
 var kills := 0
 var wave := 1
+var level := 1
 signal wave_increase
 
 func _on_badguy_spawner_on_death() -> void:
@@ -15,4 +16,8 @@ func _on_badguy_spawner_on_death() -> void:
 		wave_increase.emit()
 		kills = 0
 	elif wave == 3 and kills >= 20:
-		get_tree().change_scene_to_file("res://Scenes/StoryLevels/level_2.tscn") 
+		level += 1
+		if level == 4:
+			get_tree().change_scene_to_file("res://Scenes/StoryLevels/test_scene.tscn") #Replace with credits or whatever
+		else:
+			get_tree().change_scene_to_file("res://Scenes/StoryLevels/level_" + str(level) + ".tscn") 

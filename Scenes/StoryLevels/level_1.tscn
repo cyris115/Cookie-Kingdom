@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://ekqwt5fvn4wb" path="res://Scenes/UI/pause_menu.tscn" id="1_18hsn"]
 [ext_resource type="PackedScene" uid="uid://beatnjh15vfqp" path="res://Scenes/AssetScenes/Player.tscn" id="2_xvake"]
-[ext_resource type="Script" uid="uid://ch6as7d1ar1uc" path="res://Scenes/StoryLevels/game_manager.gd" id="3_lpic4"]
 [ext_resource type="PackedScene" uid="uid://cfh5cumsbc4np" path="res://Scenes/AssetScenes/BadguySpawner.tscn" id="4_hmqbi"]
+[ext_resource type="PackedScene" uid="uid://bu7ihgo18wf34" path="res://Scenes/AssetScenes/game_manager.tscn" id="4_mqumy"]
 
 [node name="level_1" type="Node2D"]
 
@@ -19,9 +19,6 @@ anchor_bottom = 0.5
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_xvake")]
 
-[node name="GameManager" type="Node2D" parent="."]
-script = ExtResource("3_lpic4")
-
 [node name="BadguySpawner" parent="." instance=ExtResource("4_hmqbi")]
 position = Vector2(-354, -190)
 
@@ -34,11 +31,13 @@ position = Vector2(-235, 205)
 [node name="BadguySpawner4" parent="." instance=ExtResource("4_hmqbi")]
 position = Vector2(469, -191)
 
-[connection signal="wave_increase" from="GameManager" to="BadguySpawner" method="_on_game_manager_wave_increase"]
-[connection signal="wave_increase" from="GameManager" to="BadguySpawner2" method="_on_game_manager_wave_increase"]
-[connection signal="wave_increase" from="GameManager" to="BadguySpawner3" method="_on_game_manager_wave_increase"]
-[connection signal="wave_increase" from="GameManager" to="BadguySpawner4" method="_on_game_manager_wave_increase"]
+[node name="GameManager" parent="." instance=ExtResource("4_mqumy")]
+
 [connection signal="on_death" from="BadguySpawner" to="GameManager" method="_on_badguy_spawner_on_death"]
 [connection signal="on_death" from="BadguySpawner2" to="GameManager" method="_on_badguy_spawner_on_death"]
 [connection signal="on_death" from="BadguySpawner3" to="GameManager" method="_on_badguy_spawner_on_death"]
 [connection signal="on_death" from="BadguySpawner4" to="GameManager" method="_on_badguy_spawner_on_death"]
+[connection signal="wave_increase" from="GameManager" to="BadguySpawner" method="_on_game_manager_wave_increase"]
+[connection signal="wave_increase" from="GameManager" to="BadguySpawner2" method="_on_game_manager_wave_increase"]
+[connection signal="wave_increase" from="GameManager" to="BadguySpawner3" method="_on_game_manager_wave_increase"]
+[connection signal="wave_increase" from="GameManager" to="BadguySpawner4" method="_on_game_manager_wave_increase"]

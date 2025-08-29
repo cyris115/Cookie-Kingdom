@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7shuf33j2fc1"]
+
+[ext_resource type="Script" uid="uid://p133bftkuwxq" path="res://Scripts/magic_explosion.gd" id="1_6qh3u"]
+
+[node name="magic_explosion" type="Area2D"]
+script = ExtResource("1_6qh3u")
+
+[node name="ExplosionTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[connection signal="timeout" from="ExplosionTimer" to="." method="_on_explosion_timer_timeout"]

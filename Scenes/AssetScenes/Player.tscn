@@ -296,6 +296,10 @@ texture = SubResource("CanvasTexture_gntrk")
 wait_time = 0.5
 autostart = true
 
+[node name="MagicTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
 [node name="InvincibilityTimer" type="Timer" parent="."]
 one_shot = true
 
@@ -342,5 +346,6 @@ visible = false
 shape = SubResource("CircleShape2D_rpqav")
 
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
+[connection signal="timeout" from="MagicTimer" to="." method="_on_magic_timer_timeout"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="StamTimer" to="." method="_on_stam_timer_timeout"]

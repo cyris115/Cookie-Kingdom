@@ -22,16 +22,19 @@ var direction := Vector2.RIGHT
 static var last_direction := Vector2.RIGHT
 
 var bullet = preload("res://Scenes/AssetScenes/Bullet.tscn")
+var magic_bullet = preload("res://Scenes/AssetScenes/magic_bullet.tscn")
 @export var barrel: Node2D
 var can_shoot := false
 var can_damage := true
 var can_sprint := true
+var can_magic := false
 var is_sprinting := false
 var is_dead := false
 
 @onready var invincibility_timer: Timer = $InvincibilityTimer
 @onready var shoot_timer: Timer = $ShotTimer
 @onready var stam_timer: Timer = $StamTimer
+@onready var magic_timer: Timer = $MagicTimer
 @onready var gun: Sprite2D = $RotationNode/GunBarrel/Sprite2D
 @onready var body: AnimatedSprite2D = $RotationNode/AnimatedSprite2D
 
@@ -121,6 +124,15 @@ func Shoot():
 		get_tree().current_scene.add_child(new_bullet)
 		can_shoot = false
 		shoot_timer.start()
+	
+	if Input.is_action_pressed("magic_shoot") and can_magic:
+		var new_magic_bullet = magic_bullet.instantiate()
+		new_magic_bullet.global_position = barrel.global_position
+		new_magic_bullet.rotation = (get_global_mouse_position() - global_position).angle()
+		get_tree().current_scene.add_child(new_magic_bullet)
+		can_magic = false
+		magic_timer.start()
+		
 
 func take_damage(dmg: int):
 	hp -= dmg
@@ -142,4 +154,5 @@ func _on_invincibility_timer_timeout() -> void:
 func _on_stam_timer_timeout() -> void:
 	can_sprint = true
 	
-	
+func _on_magic_timer_timeout() -> void:
+	can_magic = true

@@ -1,6 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkqjwejklf126"]
+[gd_scene load_steps=11 format=3 uid="uid://bkqjwejklf126"]
 
 [ext_resource type="Script" uid="uid://ccedv6ofuj01y" path="res://Scripts/start_menu.gd" id="1_xry01"]
+[ext_resource type="Texture2D" uid="uid://cxu4aak7haw2c" path="res://Assets/cookie-play-button.png" id="2_8wf1d"]
+[ext_resource type="Texture2D" uid="uid://ce2shsf3yeyxm" path="res://Assets/cookie-button-quit002.png" id="3_8wf1d"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qpngb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8wf1d"]
+texture = ExtResource("2_8wf1d")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2ybwg"]
+texture = ExtResource("2_8wf1d")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3kyvb"]
+content_margin_bottom = 28.0
+texture = ExtResource("2_8wf1d")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6aj3n"]
+texture = ExtResource("3_8wf1d")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fa70d"]
+texture = ExtResource("3_8wf1d")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j6k6k"]
+content_margin_bottom = 20.0
+texture = ExtResource("3_8wf1d")
 
 [node name="StartMenu" type="Control"]
 process_mode = 3
@@ -26,6 +50,7 @@ offset_right = 71.0
 offset_bottom = 46.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_qpngb")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
 layout_mode = 2
@@ -36,16 +61,30 @@ size_flags_horizontal = 4
 text = "COOKIE KINGDOM"
 
 [node name="Play" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+texture_filter = 1
 layout_mode = 2
-text = "Play Game"
+theme_override_styles/hover = SubResource("StyleBoxTexture_8wf1d")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_2ybwg")
+theme_override_styles/normal = SubResource("StyleBoxTexture_3kyvb")
+text = "
+"
 
 [node name="Quit" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+texture_filter = 1
 layout_mode = 2
-text = "Quit"
+theme_override_styles/hover = SubResource("StyleBoxTexture_6aj3n")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_fa70d")
+theme_override_styles/normal = SubResource("StyleBoxTexture_j6k6k")
+text = "
+"
 
 [node name="QuitConfrim" type="ConfirmationDialog" parent="CanvasLayer/PanelContainer/VBoxContainer/Quit"]
 size = Vector2i(252, 100)
 dialog_text = "Are you sure you want to quit?"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(574, 326)
+zoom = Vector2(2.185, 2.185)
 
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

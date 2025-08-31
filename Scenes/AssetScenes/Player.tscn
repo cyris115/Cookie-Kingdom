@@ -311,6 +311,8 @@ one_shot = true
 zoom = Vector2(2.445, 2.445)
 
 [node name="HPLabel" type="Label" parent="."]
+z_index = 5
+texture_filter = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -326,7 +328,8 @@ text = "hp:100"
 horizontal_alignment = 1
 
 [node name="StamLabel" type="Label" parent="."]
-visible = false
+z_index = 5
+texture_filter = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -342,10 +345,14 @@ text = "stamina: 100"
 horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_rpqav")
+
+[node name="AfterDeathTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
 [connection signal="timeout" from="MagicTimer" to="." method="_on_magic_timer_timeout"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="StamTimer" to="." method="_on_stam_timer_timeout"]
+[connection signal="timeout" from="AfterDeathTimer" to="." method="_on_after_death_timer_timeout"]

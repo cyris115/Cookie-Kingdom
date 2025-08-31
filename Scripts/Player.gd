@@ -37,6 +37,8 @@ var is_dead := false
 @onready var magic_timer: Timer = $MagicTimer
 @onready var gun: Sprite2D = $RotationNode/GunBarrel/Sprite2D
 @onready var body: AnimatedSprite2D = $RotationNode/AnimatedSprite2D
+@onready var after_death_timer: Timer = $AfterDeathTimer
+
 
 @onready var hp_label: Label = $HPLabel
 @onready var stam_label: Label = $StamLabel
@@ -111,6 +113,12 @@ func _physics_process(_delta: float) -> void:
 				invincibility_timer.start()
 				break
 
+
+
+	if is_dead:
+		after_death_timer.start()
+		
+
 func Shoot():
 	#no shoot if ded
 	if is_dead:
@@ -156,3 +164,7 @@ func _on_stam_timer_timeout() -> void:
 	
 func _on_magic_timer_timeout() -> void:
 	can_magic = true
+
+
+func _on_after_death_timer_timeout() -> void:
+	$"../../DeathScreen/CanvasLayer/VBoxContainer".show()

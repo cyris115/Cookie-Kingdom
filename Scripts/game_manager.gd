@@ -21,3 +21,7 @@ func _on_badguy_spawner_on_death() -> void:
 			get_tree().change_scene_to_file("res://Scenes/StoryLevels/test_scene.tscn") #Replace with credits or whatever
 		else:
 			get_tree().change_scene_to_file("res://Scenes/StoryLevels/level_" + str(level) + ".tscn") 
+
+
+func _on_button_pressed() -> void:
+	get_tree().reload_current_scene()
